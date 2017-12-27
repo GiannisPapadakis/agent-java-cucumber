@@ -166,10 +166,10 @@ public class Utils {
 		if (table != null) {
 			List<ParameterResource> params = new ArrayList<ParameterResource>();
 			for (int i = 1; i < table.size(); i++) {
-				for (String cell : table.get(i).getCells()) {
+				for (int j = 0; j < table.get(i).getCells().size(); j++) {
 					ParameterResource parameter = new ParameterResource();
-					parameter.setKey(table.get(0).getCells().get(i));
-					parameter.setValue(cell);
+					parameter.setKey(table.get(0).getCells().get(j));
+					parameter.setValue(table.get(i).getCells().get(j));
 					params.add(parameter);
 				}
 			}
