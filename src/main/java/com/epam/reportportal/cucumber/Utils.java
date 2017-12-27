@@ -24,8 +24,8 @@ import com.epam.reportportal.listeners.Statuses;
 import com.epam.reportportal.service.Launch;
 import com.epam.reportportal.service.ReportPortal;
 import com.epam.ta.reportportal.ws.model.FinishTestItemRQ;
+import com.epam.ta.reportportal.ws.model.ParameterResource;
 import com.epam.ta.reportportal.ws.model.StartTestItemRQ;
-import com.epam.ta.reportportal.ws.model.issue.Issue;
 import com.epam.ta.reportportal.ws.model.log.SaveLogRQ;
 import com.epam.ta.reportportal.ws.model.log.SaveLogRQ.File;
 import gherkin.formatter.model.*;
@@ -159,6 +159,23 @@ public class Utils {
 	 */
 	public static String buildStatementName(BasicStatement stmt, String prefix, String infix, String suffix) {
 		return (prefix == null ? "" : prefix) + stmt.getKeyword() + infix + stmt.getName() + (suffix == null ? "" : suffix);
+	}
+
+	public static List<ParameterResource> extractParamters(Step step) {
+		List<DataTableRow> table = step.getRows();
+		if (table != null) {
+			List<ParameterResource> params = new ArrayList<ParameterResource>();
+			for (int i = 1; i < table.size(); i++) {
+				for (String cell : table.get(i).getCells()) {
+					ParameterResource parameter = new ParameterResource();
+					parameter.setKey(table.get(0).getCells().get(i));
+					parameter.setValue(cell);
+					params.add(parameter);
+				}
+			}
+			return params;
+		}
+		return Collections.emptyList();
 	}
 
 	/**
