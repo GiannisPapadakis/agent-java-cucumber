@@ -69,8 +69,8 @@ public class StepReporter extends AbstractReporter {
 	protected void beforeStep(Step step) {
 		StartTestItemRQ rq = new StartTestItemRQ();
 		rq.setName(Utils.buildStatementName(step, stepPrefix, " ", null));
-		//rq.setDescription(Utils.buildMultilineArgument(step));
-		rq.setParameters(Utils.extractParamters(step));
+		rq.setDescription(Utils.buildMultilineArgument(step));
+		rq.setParameters(Utils.extractParameters(step));
 		rq.setStartTime(Calendar.getInstance().getTime());
 		rq.setType("STEP");
 		currentStepId = RP.get().startTestItem(currentScenario.getId(), rq);
