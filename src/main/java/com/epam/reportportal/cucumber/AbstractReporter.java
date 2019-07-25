@@ -28,6 +28,7 @@ import gherkin.formatter.Formatter;
 import gherkin.formatter.Reporter;
 import gherkin.formatter.model.*;
 import io.reactivex.Maybe;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rp.com.google.common.base.Supplier;
@@ -88,6 +89,11 @@ public abstract class AbstractReporter implements Formatter, Reporter {
 			skippedIssueAttr.setValue(skippedAnIssue == null ? "true" : skippedAnIssue.toString());
 			skippedIssueAttr.setSystem(true);
 			rq.getAttributes().add(skippedIssueAttr);
+
+			rq.setRerun(parameters.isRerun());
+			if (StringUtils.isNotEmpty(parameters.getRerunOf())) {
+				rq.setRerunOf(parameters.getRerunOf());
+			}
 
 			Launch launch = reportPortal.newLaunch(rq);
 			finished = new AtomicBoolean(false);
